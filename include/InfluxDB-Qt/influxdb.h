@@ -7,6 +7,8 @@
 #include <QVector>
 #include <memory>
 
+class QNetworkReply;
+
 namespace influx
 {
 
@@ -18,12 +20,12 @@ class InfluxDB : public QObject
 public:
     explicit InfluxDB(QObject *parent = nullptr);
     ~InfluxDB() override;
-    InfluxDB(const InfluxDB &) = delete;
-    InfluxDB(InfluxDB &&) = delete;
-    InfluxDB& operator=(const InfluxDB &) = delete;
-    InfluxDB& operator=(InfluxDB &&) = delete;
+    InfluxDB(const InfluxDB &)            = delete;
+    InfluxDB(InfluxDB &&)                 = delete;
+    InfluxDB &operator=(const InfluxDB &) = delete;
+    InfluxDB &operator=(InfluxDB &&)      = delete;
 
-    void write(const QByteArray &bucket, const QVector<Point> &data);
+    QNetworkReply *write(const QByteArray &bucket, const QVector<Point> &data);
     void query(const QByteArray &bucket, const QByteArray &query);
 
     void setUrl(const QString &newUrl);
@@ -31,6 +33,7 @@ public:
     void setToken(const QByteArray &newToken);
 
 signals:
+    void requestFinished(QNetworkReply *);
 
 private:
     std::unique_ptr<HTTPInterface> iface;

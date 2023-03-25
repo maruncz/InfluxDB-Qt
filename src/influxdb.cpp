@@ -1,5 +1,7 @@
 #include "influxdb.h"
 #include "httpinterface.h"
+#include <QDebug>
+#include <QNetworkReply>
 
 namespace influx
 {
@@ -7,18 +9,21 @@ namespace influx
 InfluxDB::InfluxDB(QObject *parent) : QObject{parent}
 {
     iface = std::make_unique<HTTPInterface>(this);
+    connect(iface.get(), &HTTPInterface::requestFinished, this,
+            &InfluxDB::requestFinished);
 }
 
 InfluxDB::~InfluxDB() = default;
 
-void InfluxDB::write(const QByteArray &bucket, const QVector<Point> &data)
+QNetworkReply *InfluxDB::write(const QByteArray &bucket,
+                               const QVector<Point> &data)
 {
     QByteArray arr;
     for (const auto &e : data)
     {
         arr.append(e.toLineProtocol());
     }
-    iface->write(bucket, std::move(arr));
+    return iface->write(bucket, std::move(arr));
 }
 
 void InfluxDB::query(const QByteArray &bucket, const QByteArray &query)
