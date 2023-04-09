@@ -5,9 +5,10 @@ add_library(InfluxDB-Qt STATIC
 )
 
 target_link_libraries(InfluxDB-Qt
+    PUBLIC
+    Qt${QT_VERSION_MAJOR}::Network
     PRIVATE
-    Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Network)
+    Qt${QT_VERSION_MAJOR}::Core)
 
 target_include_directories(InfluxDB-Qt
     INTERFACE
