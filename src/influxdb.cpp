@@ -23,7 +23,7 @@ QNetworkReply *InfluxDB::write(const QByteArray &bucket,
     {
         arr.append(e.toLineProtocol());
     }
-    return iface->write(bucket, std::move(arr));
+    return iface->write(bucket, arr);
 }
 
 void InfluxDB::query(const QByteArray &bucket, const QByteArray &query)

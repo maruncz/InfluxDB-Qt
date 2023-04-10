@@ -15,7 +15,7 @@ public:
     explicit HTTPInterface(QObject *parent = nullptr);
 
     QNetworkReply *query(const QByteArray &bucket, const QByteArray &query);
-    QNetworkReply *write(const QByteArray &bucket, QByteArray &&data);
+    QNetworkReply *write(const QByteArray &bucket, const QByteArray &data);
 
     void setUrl(const QString &newUrl);
     void setOrg(const QString &newOrg);
@@ -25,7 +25,6 @@ signals:
     void requestFinished(QNetworkReply *);
 
 private:
-
     QString url;
     QString org;
     QByteArray token;

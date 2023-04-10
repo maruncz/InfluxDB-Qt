@@ -27,7 +27,8 @@ QNetworkReply *HTTPInterface::query(const QByteArray &bucket,
     return reply;
 }
 
-QNetworkReply *HTTPInterface::write(const QByteArray &bucket, QByteArray &&data)
+QNetworkReply *HTTPInterface::write(const QByteArray &bucket,
+                                    const QByteArray &data)
 {
     QNetworkRequest req;
     req.setHeader(QNetworkRequest::KnownHeaders::ContentTypeHeader,
