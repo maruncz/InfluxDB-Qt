@@ -12,6 +12,46 @@ namespace influx
 class Point
 {
 public:
+    Point()               = default;
+    ~Point()              = default;
+    Point(const Point &o) = default;
+#if 0
+        : measurement(o.measurement), tagSet(o.tagSet), fieldSet(o.fieldSet),
+          timestamp(o.timestamp)
+    {
+    }
+#endif
+
+    Point(Point &&o) noexcept
+    {
+        using std::swap;
+        measurement.swap(o.measurement);
+        tagSet.swap(o.tagSet);
+        fieldSet.swap(o.fieldSet);
+        timestamp = o.timestamp;
+    }
+
+    Point &operator=(const Point &o) = default;
+#if 0
+    {
+        measurement = o.measurement;
+        tagSet      = o.tagSet;
+        fieldSet    = o.fieldSet;
+        timestamp   = o.timestamp;
+        return *this;
+    }
+#endif
+
+    Point &operator=(Point &&o) noexcept
+    {
+        using std::swap;
+        measurement.swap(o.measurement);
+        tagSet.swap(o.tagSet);
+        fieldSet.swap(o.fieldSet);
+        timestamp = o.timestamp;
+        return *this;
+    }
+
     struct Tag
     {
         QString key;
@@ -37,7 +77,7 @@ private:
     QString measurement;
     QVector<Tag> tagSet;
     QVector<Field> fieldSet;
-    uint64_t timestamp;
+    uint64_t timestamp{0};
 };
 
 } // namespace influx
