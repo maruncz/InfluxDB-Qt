@@ -46,4 +46,9 @@ void InfluxDB::setToken(const QByteArray &newToken)
     iface->setToken(newToken);
 }
 
+void InfluxDB::setTimeout(int msec)
+{
+    iface->setTimeout(msec);
+}
+
 } // namespace influx

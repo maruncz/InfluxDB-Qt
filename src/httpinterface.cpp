@@ -57,4 +57,9 @@ void HTTPInterface::setToken(const QByteArray &newToken)
     token = QByteArray("Token ") + newToken;
 }
 
+void HTTPInterface::setTimeout(int msec)
+{
+    manager.setTransferTimeout(msec);
+}
+
 } // namespace influx

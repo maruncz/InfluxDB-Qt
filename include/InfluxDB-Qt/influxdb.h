@@ -31,6 +31,7 @@ public:
     void setUrl(const QString &newUrl);
     void setOrg(const QString &newOrg);
     void setToken(const QByteArray &newToken);
+    void setTimeout(int msec);
 
 signals:
     void requestFinished(QNetworkReply *);
